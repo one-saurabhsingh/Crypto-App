@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { server } from "../index";
 import {
+  
   Container,
   Heading,
   HStack,
@@ -10,18 +11,32 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Loader from "./Loader";
+import ErrorComponent from "./ErrorComponent.jsx";
+
+
 const Exchanges = () => {
 
     const [exchanges, setExchanges] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     useEffect(() => {
         const fetchExchanges = async () => {
-        const {data} = await axios.get( `${server}/exchanges`);
-        setExchanges(data);
-        setLoading(false);
+          try {
+            const {data} = await axios.get( `${server}/exchanges`);
+            setExchanges(data);
+            setLoading(false);
+          } catch (error) {
+            setError(true);
+            setLoading(false);
+          }
+       
         };
         fetchExchanges();
     },[]);
+
+    if (error) {
+      return <ErrorComponent message={"Error while fetching components"}/>;
+    }
 return (<Container maxW={"container.xl"}>
     {loading ? (
         <Loader/>
@@ -58,7 +73,7 @@ const ExchangeCard = ({ name, img, rank, url }) => (
         m={"4"}
         css={{
           "&:hover": {
-            transform: "scale(1.1)",
+            transform: "scale(1.3)",
           },
         }}
       >
@@ -73,7 +88,7 @@ const ExchangeCard = ({ name, img, rank, url }) => (
           {rank}
         </Heading>
   
-        <Text noOfLines={1}>{name}</Text>
+        <Text  noOfLines={1} textAlign={"center"}>{name}</Text>
       </VStack>
     </a>
   );
