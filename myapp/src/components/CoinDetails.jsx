@@ -89,6 +89,7 @@ const CoinDetails = () => {
           `${server}/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`
         );
         setCoin(data);
+        console.log(data);
         setChartArray(chartData.prices);
         setLoading(false);
       } catch (error) {
@@ -149,6 +150,7 @@ const CoinDetails = () => {
               <StatNumber>
                 {currencySymbol}
                 {coin.market_data.current_price[currency]}
+
               </StatNumber>
               <StatHelpText>
                 <StatArrow
@@ -171,7 +173,11 @@ const CoinDetails = () => {
             <CustomBar
               high={`${currencySymbol}${coin.market_data.high_24h[currency]}`}
               low={`${currencySymbol}${coin.market_data.low_24h[currency]}`}
-            />
+              h={coin.market_data.high_24h[currency]}
+              l={coin.market_data.low_24h[currency]}
+              c={coin.market_data.current_price[currency]}
+              
+              />
 
             <Box w={"full"} p="4">
               <Item title={"Max Supply"} value={coin.market_data.max_supply} />
@@ -208,9 +214,9 @@ const Item = ({ title, value }) => (
   </HStack>
 );
 
-const CustomBar = ({ high, low }) => (
+const CustomBar = ({ high, low, h, l, c}) => (
   <VStack w={"full"}>
-    <Progress value={50} colorScheme={"teal"} w={"full"} />
+    <Progress value={((c-l)/(h-l))*100} colorScheme={"linkedin"} w={"full"} />
     <HStack justifyContent={"space-between"} w={"full"}>
       <Badge children={low} colorScheme={"red"} />
       <Text fontSize={"sm"}>24H Range</Text>
