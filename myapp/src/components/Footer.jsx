@@ -24,7 +24,7 @@ const Footer = () => {
           </Text>
         </VStack>
 
-        <VStack>
+{/*         <VStack>
             <HStack>
             <a href="https://github.com/one-saurabhsingh" target="blank"> <Avatar boxSize={"28"} mt={["4", "0"]} src={avatarSrc} /></a>
                 <a href="https://github.com/GURU1302" target="blank"> <Avatar boxSize={"28"} mt={["4", "0"]} src={avatarSrc2} /></a>
@@ -33,7 +33,7 @@ const Footer = () => {
            
             </HStack>
           <Text>  Our Founders  </Text>
-        </VStack>
+        </VStack> */}
       </Stack>
     </Box>
   );
